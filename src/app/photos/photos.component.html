@@ -1,0 +1,17 @@
+<div class="d-flex align-items-end flex-column">
+  <button class="btn btn-default " (click)="logoff() ">
+    Logout
+  </button>
+</div>
+<div class="col-sm-12">
+  <div ngxInfiniteScroller strategy="scrollingToBottom" (onScrollDown)="onScrollDown()" id="scroller">
+    <div class="card" style="width: 18rem;" *ngFor="let photo of this.photos">
+      <img class=" card-img-top " src="{{photo.sizes[photo.sizes.length-1].url}}" alt="Card image cap ">
+      <div class="card-body ">
+        <!-- <h5 class="card-title ">Card title</h5> -->
+        <p class="card-text ">{{ photo.text }}</p>
+        <button class="btn btn-primary" (click)="editPhoto(photo)">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
