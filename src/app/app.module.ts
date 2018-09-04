@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { OAuthModule } from 'angular-oauth2-oidc';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
+
+import { AppComponent } from './app.component';
 import { PhotosComponent } from './photos/photos.component';
 import { PhotosService } from './photos/photos.service';
 import { EditPhotoComponent } from './photos/edit_photo.component';
@@ -15,8 +17,8 @@ import { AuthGuard } from './auth/auth.config';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo:'/auth', 
-		pathMatch : 'full'
+		redirectTo: '/auth',
+		pathMatch: 'full'
 	},
 	{
 		path: 'auth',
@@ -25,12 +27,12 @@ const routes: Routes = [
 	{
 		path: 'photos',
 		component: PhotosComponent,
-		canActivate:[AuthGuard]
+		canActivate: [AuthGuard]
 	},
 	{
 		path: 'photos/:id',
 		component: EditPhotoComponent,
-		canActivate:[AuthGuard]
+		canActivate: [AuthGuard]
 	}
 ];
 

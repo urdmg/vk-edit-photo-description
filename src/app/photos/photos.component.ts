@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { tap, skipWhile } from 'rxjs/operators';
+
 import { OAuthService } from 'angular-oauth2-oidc';
 import { PhotosService } from './photos.service';
-import { tap, skipWhile } from 'rxjs/operators';
+
 
 @Component({
 	selector: 'app-photos',
@@ -13,9 +15,9 @@ export class PhotosComponent implements OnInit {
 	title = 'vk-authenticate';
 	base_url = 'https://api.vk.com/method/'
 	token: string;
-	public photos: Array<any> = [];
-	public httpReqestInProgress: boolean = false;
-	public offset = 0;
+	photos: Array<any> = [];
+	httpReqestInProgress: boolean = false;
+	offset = 0;
 
 	constructor(
 		private router: Router,
@@ -33,10 +35,6 @@ export class PhotosComponent implements OnInit {
 				this.photos = this.photos.concat(photos);
 			}
 		);
-		// this.token = this.oauthService.getAccessToken()
-		// if (this.token) {
-		// 	this.router.navigate(['/photos']);
-		// }
 	}
 
 	public logoff() {

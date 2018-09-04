@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { PhotosService } from './photos.service';
-import { Router } from '@angular/router';
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
 	selector: 'edit-photo',
@@ -12,11 +12,13 @@ export class EditPhotoComponent implements OnInit {
 	photo: any;
 	base_url = 'https://api.vk.com/method/'
 	id: number;
-	constructor(private router : Router,
+
+	constructor(
+		private router: Router,
 		private photosService: PhotosService,
 		private route: ActivatedRoute
 	) {
-	this.route.params.subscribe( params => this.id = params.id ); 
+		this.route.params.subscribe(params => this.id = params.id);
 	}
 
 	ngOnInit() {
@@ -26,14 +28,18 @@ export class EditPhotoComponent implements OnInit {
 		}
 	}
 
-	save(){
-		this.photosService.updateDescription(this.photo)
-		this.router.navigate(['/photos']);
+	public save() {
+		this.photosService.updateDescription(this.photo).then(
+			(data)=> {
+				if(data['response']==1){
+					this.router.navigate(['/photos']);
+				}
+			}
+		)
 	}
 
-	cancel(){
+	public cancel() {
 		this.photosService.photoHandler(this.photo);
 		this.router.navigate(['/photos']);
 	}
 }
-

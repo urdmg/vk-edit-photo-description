@@ -1,9 +1,12 @@
-import { OAuthService } from 'angular-oauth2-oidc';
-import { JwksValidationHandler } from 'angular-oauth2-oidc';
-import { authConfig } from './auth.config';
 import { Component, OnInit } from '@angular/core';
 import { tap, skipWhile } from 'rxjs/operators';
 import { Router } from '@angular/router';
+
+import { OAuthService } from 'angular-oauth2-oidc';
+import { JwksValidationHandler } from 'angular-oauth2-oidc';
+
+import { authConfig } from './auth.config';
+
 
 @Component({
 	selector: 'app-auth',
@@ -12,8 +15,11 @@ import { Router } from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 	token: string;
-	constructor(private oauthService: OAuthService,
-		private router: Router) {
+
+	constructor(
+		private oauthService: OAuthService,
+		private router: Router
+	) {
 		this.configureWithNewConfigApi();
 	}
 
@@ -33,10 +39,5 @@ export class AuthComponent implements OnInit {
 	public login() {
 		this.oauthService.initImplicitFlow();
 	}
-
-	// public logoff() {
-	// 	this.oauthService.logOut();
-	// 	// this.router.navigate(["Your actualComponent"]));
-	// }
 
 }

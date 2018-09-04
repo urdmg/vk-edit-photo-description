@@ -1,7 +1,8 @@
-import { AuthConfig } from 'angular-oauth2-oidc';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
+import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
 
@@ -22,9 +23,11 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot):  boolean {
-      if (sessionStorage.getItem('access_token') != null)
-      return true;
+      if (sessionStorage.getItem('access_token') != null) {
+        return true;  
+      }
       this.router.navigate(['/auth']);
+
       return false;
   }
 }

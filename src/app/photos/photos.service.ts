@@ -8,18 +8,20 @@ import { HttpClient } from '@angular/common/http';
 export class PhotosService {
 	base_url = 'https://api.vk.com/method/'
 	access_token = this.oauthService.getAccessToken()
-	public photos: Array<any> = [];
-	public photo: any;
-	public httpReqestInProgress: boolean = false;
+	photos: Array<any> = [];
+	photo: any;
+	httpReqestInProgress: boolean = false;
 	private offset = 0;
 
-	constructor(private http: HttpClient,
-		private oauthService: OAuthService, ) { }
+	constructor(
+		private http: HttpClient,
+		private oauthService: OAuthService,
+	) { 
+
+	}
 
 	photoHandler(photo: any) {
-		// if "photo" type is set to any somehow 
-		// even if number have been sent type 
-		// of photo retrieved as string
+		// Prevent assigning of string to the object
 		if (this.photo == undefined && typeof (photo) != "string") {
 			this.photo = photo
 			return this.photo;
@@ -28,9 +30,9 @@ export class PhotosService {
 			if (photo == this.photo.id.toString()) {
 				return this.photo;
 			}
-		} 
+		}
 
-		if (this.photo.id != photo.id){
+		if (this.photo.id != photo.id) {
 			this.photo = photo
 			return this.photo
 		}
@@ -43,12 +45,8 @@ export class PhotosService {
 
 	updateDescription(photo) {
 		let url = `${this.base_url}photos.edit?access_token=${this.access_token}&v=5.84&owner_id=${photo.owner_id}&photo_id=${photo.id}&caption=${photo.text}`
-		return this.http.jsonp(url, 'callback').pipe(
-			skipWhile(() => this.httpReqestInProgress),
-			tap(() => { this.httpReqestInProgress = true; })
-		).subscribe((r: any[]) => {
-			console.log(r)
-			this.httpReqestInProgress = false;
+		return this.http.jsonp(url, 'callback').toPromise().then(data => {
+			return data
 		});
 	}
 
@@ -64,12 +62,9 @@ export class PhotosService {
 			tap(() => { this.httpReqestInProgress = true; })
 		).subscribe((r: any[]) => {
 			this.offset += 2;
-			// Is it important to create object that will correlate response?
-			// otherwise I have an error <Property "response" does not exist on type any[]>
-			saveResultsCallback(r.response.items);
+			saveResultsCallback(r['response']['items']);
 			this.httpReqestInProgress = false;
 		});
 	}
-
 
 }
